@@ -12606,6 +12606,22 @@ def DrawPCB(mypcb,lyr=None,rmv_container=None,keep_sketch=None):
         ## NB use always float() to guarantee number not string!!!
         warn=""
         PCB_Models = []
+
+        for v in mypcb.via:
+            try:
+                r_via = float(v.drill)
+            except:
+                sayerr('via drill size missing')
+                continue
+            if r_via >= min_drill_size:
+                x1 = v.at[0]
+                y1 = -v.at[1]
+                if holes_solid:
+                    obj = createHole3(x1, y1, r_via, r_via, "oval", totalHeight)  # need to be separated instructions
+                else:
+                    obj = createHole4(x1, y1, r_via, r_via, "oval")  # need to be separated instructions
+                HoleList.append(obj)
+
         for m in mypcb.module:  #parsing modules  #check top/bottom for placing 3D models
             #print(m.tstamp);print(m.fp_text[0][1])
             #stop
