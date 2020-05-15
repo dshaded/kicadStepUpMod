@@ -244,10 +244,10 @@ def addtracks():
         #pcb.colors={'board':(1.,1.,1.),'pad':{0:(219/255,188/255,126/255)},'zone':{0:(0.,1.,0.)},'track':{0:(0.,1.,1.)},'copper':{0:(0.,1.,1.)},}  
         pcb.setLayer(Top_lvl)
         #try:   #doing top tracks layer
-        pcb.makeCopper(holes=True, minSize=minSizeDrill)
+        pcb.makeCopper(holes=True, minSize=minSizeDrill, shape_type='solid',thickness=0.1, fuse=True)
         doc=FreeCAD.ActiveDocument
         docG=FreeCADGui.ActiveDocument
-        deltaz = 0.01 #10 micron
+        deltaz = 0.0
         composed = doc.ActiveObject
         s = composed.Shape
         doc.addObject('Part::Feature','topTracks'+ftname_sfx).Shape=composed.Shape
@@ -288,8 +288,9 @@ def addtracks():
         
         #try:    #doing bot tracks layer
         #pcb.setLayer(LvlBotName)
+        deltaz = 0.1 #100 micron
         pcb.setLayer(Bot_lvl)
-        pcb.makeCopper(holes=True, minSize=minSizeDrill)
+        pcb.makeCopper(holes=True, minSize=minSizeDrill, shape_type='solid',thickness=0.1, fuse=True)
         composed = doc.ActiveObject
         s = composed.Shape
         doc.addObject('Part::Feature','botTracks'+ftname_sfx).Shape=composed.Shape

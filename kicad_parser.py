@@ -662,6 +662,7 @@ class KicadFcad:
                         deltaz = 0.02 # 20 micron
                     else:
                         deltaz = -0.02 # 20 micron
+                    deltaz = 0
                     FreeCAD.activeDocument().addObject("Part::Compound",'{}_area'.format(name))
                     for o in obj:
                         if 'pads' in o.Label:
